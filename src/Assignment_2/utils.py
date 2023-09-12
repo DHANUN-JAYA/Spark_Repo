@@ -1,10 +1,10 @@
 import pyspark
 from pyspark import SparkContext, SparkConf
 def create_SparkConf():
-    conf=SparkConf().setAppName("Assignment_2").setMaster("local[*]")
-    sc=SparkContext(conf=conf)
+    conf=SparkConf().setAppName("Assignment_2").setMaster("local[2]")
+    sc=SparkContext(conf = conf)
     return sc
-import itertools
+import  itertools
 def myParse(line):
     line = line.replace(' -- ', ', ')
     line = line.replace('.rb: ', ', ')

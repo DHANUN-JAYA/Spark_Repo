@@ -4,8 +4,6 @@ from pyspark.sql import SparkSession
 
 sc = create_SparkConf()
 
-
-
 #loading textFile in RDD
 
 parsedRDD=getRDD(sc)
