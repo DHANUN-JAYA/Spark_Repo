@@ -3,10 +3,10 @@ import pyspark
 from pyspark.sql import SparkSession
 
 
-spark = SparkSession.builder.appName('Spark_Assignment_1').getOrCreate()
+spark=create_session()
 
 #loading user_csv  file
-df_user = spark.read.csv('C:/Users/Welcome/PycharmProjects/Spark_Repo/Spark_Repo/resourses/user.csv', header=True)
+df_user =read('C:/Users/Welcome/PycharmProjects/Spark_Repo/Spark_Repo/resourses/user.csv', True)
 
 #loading transaction_csv file
 df_transaction = spark.read.csv('C:/Users/Welcome/PycharmProjects/Spark_Repo/Spark_Repo/resourses/transaction.csv', header=True)
@@ -20,4 +20,5 @@ count_unique_locations_df=count_unique_locations(total_df)
 products_bought_df=products_bought(total_df)
 # c) Total spending done by each user on each product.
 total_spending_df=total_spending(total_df)
-
+# stop the session
+stop(spark)

@@ -2,7 +2,12 @@ import pyspark
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import countDistinct, sum
 import logging
-
+def create_session():
+    return  SparkSession.builder.appName('Spark_Assignment_1').getOrCreate()
+def stop(sc):
+    return sc.stop()
+def read(sc,path,boolean):
+    return sc.read(path,header=boolean)
 def merge(df_user,df_transaction):
     total_df=total_df = df_user.join(df_transaction, df_user.user_id == df_transaction.userid )
     return total_df
