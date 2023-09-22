@@ -30,5 +30,5 @@ print(most_active_hours)
 active_repo=active_Repo(parsedRDD)
 print(active_repo)
 # stop the session
-stop(spark)
+stop(sc)
 
