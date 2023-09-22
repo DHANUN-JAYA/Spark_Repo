@@ -1,8 +1,13 @@
 import pyspark
 from pyspark import SparkContext, SparkConf
+import logging
+logging.basicConfig(filename="logfile_Assignment_2", filemode="w")
+log = logging.getLogger()
+log.setLevel(logging.INFO)
 def create_SparkConf():
     conf=SparkConf().setAppName("Assignment_2").setMaster("local[2]")
     sc=SparkContext(conf = conf)
+    log.info("created spark session")
     return sc
 import  itertools
 def myParse(line):
@@ -10,9 +15,10 @@ def myParse(line):
     line = line.replace('.rb: ', ', ')
     line = line.replace(', ghtorrent-', ', ')
     return line.split(', ', 4)
-def getRDD(sc):
-    textFile = sc.textFile("C:/Users/Welcome/PycharmProjects/Spark_Repo/Spark_Repo/resourses/ghtorrent-logs.txt")
+def getRDD(sc,path):
+    textFile = sc.textFile(path)
     parsedRDD = textFile.map(myParse)
+    log.info("created rdd file from textfile")
     return parsedRDD
 def parseRepos(x):
     try:
@@ -24,9 +30,13 @@ def parseRepos(x):
     x.append(result)
     return x
 def count_rowrdd(rowrdd):
-    return rowrdd.count()
+    no_rows=rowrdd.count()
+    log.warning(f"{no_rows} Number of lines in RDD")
+    log.error(f" {no_rows}  Number of lines in RDD" )
+    return no_rows
 def no_warn_rdd(rowrdd):
     numWarns = rowrdd.filter(lambda x: x[0] == "WARN")
+    log.warning(f"{numWarns.count()} Number of lines in RDD" )
     return numWarns.count()
 def api_clint(rowrdd):
     # Filters out rows without enough elements (about 50 rows)
@@ -41,6 +51,7 @@ def api_clint(rowrdd):
     removedEmpty = reposRdd.filter(lambda x: x[5] != '')
     # Group by repo and count
     uniqueRepos = removedEmpty.groupBy(lambda x: x[5])
+    log.warning(f"{uniqueRepos.count()} Number of lines in RDD" )
     return uniqueRepos.count()
 
 def HTTP(rowrdd):
@@ -101,3 +112,5 @@ def active_Repo(rowrdd):
     count_active_repo=(countActivityRepos.max(key=lambda x: x[1]))
     return count_active_repo
 
+def stop(sc):
+    return sc.stop()

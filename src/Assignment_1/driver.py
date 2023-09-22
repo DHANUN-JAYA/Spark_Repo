@@ -2,7 +2,7 @@ from utils import *
 import pyspark
 from pyspark.sql import SparkSession
 
-
+#creating spark session
 spark=create_session()
 
 #loading user_csv  file
