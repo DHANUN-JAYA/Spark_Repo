@@ -5,6 +5,7 @@ Question_1:
 
 
 •	Imported SparkSession from pyspark.sql lib
+
 •	In the resources directory imported both user and transaction csv files
 •	Created a function to create SparkSession (create_session())
 •	Added log files
